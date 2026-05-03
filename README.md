@@ -1,0 +1,399 @@
+[index (2).html](https://github.com/user-attachments/files/27324463/index.2.html)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIDE Week 1 — AI in Education Information Strips</title>
+<style>
+  :root {
+    --color-primary: #50808E;
+    --color-secondary: #84B59F;
+    --color-charcoal: #2C3E50;
+    --color-text: #37474F;
+    --color-text-muted: #78909C;
+    --color-text-tertiary: #90A4AE;
+    --color-bg: #FFFFFF;
+    --color-bg-soft: #F5F7F8;
+    --color-bg-card: #E8EFF1;
+    --color-bg-accent: #EAF1ED;
+    --color-border: #CFD8DC;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 12px rgba(80,128,142,0.08);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Calibri", sans-serif;
+    background: linear-gradient(180deg, #FAFBFC 0%, #F5F7F8 100%);
+    color: var(--color-text);
+    line-height: 1.5;
+    min-height: 100vh;
+    padding: 2.5rem 1.5rem;
+  }
+
+  .container { max-width: 920px; margin: 0 auto; }
+
+  .branding {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding-bottom: 1rem; border-bottom: 1px solid var(--color-border);
+    margin-bottom: 2rem;
+  }
+  .branding-logo {
+    width: 44px; height: 44px;
+    background: var(--color-charcoal);
+    border-left: 4px solid var(--color-secondary);
+    color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-family: Georgia, serif; font-weight: 700; font-size: 18px;
+    border-radius: var(--radius-sm);
+    letter-spacing: 1px;
+  }
+  .branding-text { flex: 1; }
+  .branding-title {
+    font-size: 14px; font-weight: 600; color: var(--color-charcoal);
+    margin: 0; letter-spacing: 0.3px;
+  }
+  .branding-sub {
+    font-size: 12px; color: var(--color-text-muted); margin: 2px 0 0;
+  }
+
+  .header { margin-bottom: 1.5rem; }
+  .title {
+    font-size: 22px; font-weight: 600; color: var(--color-charcoal);
+    margin: 0 0 6px; font-family: Georgia, serif;
+  }
+  .subtitle {
+    font-size: 14px; color: var(--color-text-muted); margin: 0; line-height: 1.6;
+  }
+  .stats {
+    display: flex; gap: 1.5rem; margin-top: 14px;
+    padding-top: 14px; border-top: 1px solid var(--color-border);
+    font-size: 13px; color: var(--color-text-muted);
+  }
+  .stat-num { color: var(--color-charcoal); font-weight: 600; }
+
+  .themes {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px; margin-bottom: 1.5rem;
+  }
+  .theme-card {
+    background: var(--color-bg); border: 1px solid var(--color-border);
+    border-radius: var(--radius-md); padding: 14px 16px;
+    cursor: pointer; transition: all 0.15s;
+    box-shadow: var(--shadow-sm);
+  }
+  .theme-card:hover { border-color: var(--color-primary); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+  .theme-card:active { transform: scale(0.99); }
+  .theme-card.active {
+    border: 2px solid var(--color-primary); padding: 13px 15px;
+    background: var(--color-bg-card);
+  }
+  .theme-name {
+    font-size: 14px; font-weight: 600; margin: 0 0 4px; color: var(--color-charcoal);
+  }
+  .theme-meta { font-size: 12px; color: var(--color-text-muted); margin: 0; }
+  .theme-dot {
+    display: inline-block; width: 9px; height: 9px;
+    border-radius: 50%; margin-right: 7px; vertical-align: middle;
+  }
+
+  .controls {
+    display: flex; gap: 10px; margin-bottom: 1.5rem; flex-wrap: wrap;
+  }
+  button {
+    font-family: inherit; font-size: 13px; font-weight: 500;
+    padding: 10px 18px; border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border); background: var(--color-bg);
+    color: var(--color-text); cursor: pointer;
+    transition: all 0.15s;
+  }
+  button:hover:not(:disabled) { border-color: var(--color-primary); color: var(--color-primary); }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+  button.primary {
+    background: var(--color-primary); color: white; border-color: var(--color-primary);
+  }
+  button.primary:hover:not(:disabled) {
+    background: var(--color-charcoal); border-color: var(--color-charcoal); color: white;
+  }
+
+  .strip-area { min-height: 320px; position: relative; }
+  .empty {
+    display: flex; align-items: center; justify-content: center;
+    height: 320px; color: var(--color-text-tertiary);
+    font-size: 14px; text-align: center; padding: 0 2rem;
+    background: var(--color-bg); border: 1px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .strip {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.75rem;
+    box-shadow: var(--shadow-md);
+    opacity: 0; animation: fadeIn 0.4s ease forwards;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .strip-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px; padding-bottom: 14px;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .strip-num {
+    font-size: 12px; color: var(--color-text-tertiary);
+    font-weight: 600; letter-spacing: 0.8px;
+  }
+  .strip-theme-tag {
+    font-size: 11px; padding: 4px 12px; border-radius: var(--radius-md);
+    font-weight: 600; letter-spacing: 0.3px;
+  }
+
+  .strip-title {
+    font-size: 18px; font-weight: 600; margin: 0 0 12px;
+    color: var(--color-charcoal); font-family: Georgia, serif;
+  }
+  .strip-body {
+    font-size: 14px; line-height: 1.7;
+    color: var(--color-text); margin: 0 0 16px;
+  }
+  .keypoint {
+    background: var(--color-bg-soft); border-radius: var(--radius-md);
+    padding: 12px 16px; margin: 0 0 16px;
+  }
+  .keypoint-label {
+    font-size: 11px; color: var(--color-text-muted); font-weight: 600;
+    letter-spacing: 0.8px; margin: 0 0 4px;
+  }
+  .keypoint-text {
+    font-size: 14px; font-style: italic; color: var(--color-charcoal);
+    margin: 0; line-height: 1.6;
+  }
+
+  .assure {
+    padding: 14px 16px; background: #EEEDFE;
+    border-radius: var(--radius-md); border-left: 3px solid #534AB7;
+  }
+  .assure-label {
+    font-size: 11px; color: #3C3489; font-weight: 600;
+    letter-spacing: 0.8px; margin: 0 0 5px;
+  }
+  .assure-stage {
+    font-size: 13px; color: #26215C; margin: 0; line-height: 1.6;
+  }
+  .assure-stage strong { font-weight: 600; }
+
+  .progress {
+    font-size: 12px; color: var(--color-text-tertiary);
+    margin-top: 14px; text-align: right;
+  }
+
+  .footer {
+    margin-top: 3rem; padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+    font-size: 11px; color: var(--color-text-tertiary);
+    text-align: center; line-height: 1.6;
+  }
+
+  @media (max-width: 600px) {
+    body { padding: 1.5rem 1rem; }
+    .title { font-size: 19px; }
+    .strip { padding: 1.25rem; }
+    .strip-title { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="branding">
+    <div class="branding-logo">A</div>
+    <div class="branding-text">
+      <p class="branding-title">AIDE — Week 1</p>
+      <p class="branding-sub">AI Integration through Instructional Design for Educators</p>
+    </div>
+  </div>
+
+  <div class="header">
+    <p class="title">AI in education — let's talk about it</p>
+    <p class="subtitle">Pick a theme, draw a card, and read it. Then share with your partner what surprised you, what you already knew, or what you'd like to try.</p>
+    <div class="stats">
+      <span><span class="stat-num" id="drawn-count">0</span> / 20 cards opened</span>
+      <span><span class="stat-num" id="theme-count">0</span> / 6 themes explored</span>
+    </div>
+  </div>
+
+  <div class="themes" id="themes"></div>
+
+  <div class="controls">
+    <button id="draw-btn" class="primary" disabled>Draw a card</button>
+    <button id="reset-theme-btn" disabled>Reset this theme</button>
+    <button id="reset-all-btn">Reset all</button>
+  </div>
+
+  <div class="strip-area" id="strip-area">
+    <div class="empty">Pick a theme above, then click "draw a card".</div>
+  </div>
+
+  <div class="progress" id="progress"></div>
+
+  <div class="footer">
+    Designed and facilitated by Aslı Dinç &nbsp;•&nbsp; PhD candidate, BAU Educational Technology &nbsp;•&nbsp; English Lecturer, BAU SFL
+  </div>
+
+</div>
+
+<script>
+(function() {
+  const themes = [
+    { id: 'foundations', name: 'What AI actually is', color: '#534AB7', bg: '#EEEDFE', strips: [1, 2, 8] },
+    { id: 'elt', name: 'AI in your English class', color: '#0F6E56', bg: '#E1F5EE', strips: [3, 11, 15] },
+    { id: 'ethics', name: 'Doing it the right way', color: '#993C1D', bg: '#FAECE7', strips: [4, 6, 10, 19] },
+    { id: 'risks', name: 'Things to watch out for', color: '#A32D2D', bg: '#FCEBEB', strips: [7, 9, 13, 20] },
+    { id: 'pedagogy', name: 'Your teaching choices', color: '#185FA5', bg: '#E6F1FB', strips: [5, 12, 14, 17, 18] },
+    { id: 'assessment', name: 'Grading and AI', color: '#854F0B', bg: '#FAEEDA', strips: [16] },
+  ];
+
+  const stripData = {
+    1: { title: 'What is AI?', body: 'Artificial Intelligence refers to computer systems that can perform tasks that usually require human intelligence. These tasks include understanding language, generating text, and recognising patterns. Generative AI is a type of AI that creates new content such as texts, images, or teaching materials.', keypoint: 'AI predicts language based on patterns. It does not think or understand like a human.', assure: '<strong>A — Analyze Learners.</strong> Before you bring AI into a lesson, it helps to know what your students already think AI is. Most have heard about it; very few know how it actually works.' },
+    2: { title: 'How generative AI works', body: 'Generative AI works by learning from large amounts of language, identifying patterns, and predicting the next most likely word. Think of it like autocomplete on your phone, but much more sophisticated. It does not know what is true. It only knows what sounds likely based on the patterns it has learned.', keypoint: 'AI generates text by prediction, not by understanding truth or meaning.', assure: '<strong>A — Analyze Learners.</strong> When you use AI in class, students will ask "how does it know?". A simple, honest answer ("it guesses the next word") protects them from thinking AI is magic.' },
+    3: { title: 'AI in English language teaching', body: 'AI can support teachers in many practical ways: creating lesson ideas, generating reading texts and dialogues, suggesting vocabulary and grammar practice, and giving feedback on writing. AI saves time and provides ideas, but teachers control how it is used. The teacher\'s professional judgment remains essential.', keypoint: 'AI is a time-saving assistant, but the teacher remains in control of pedagogy.', assure: '<strong>S — Select Methods, Media & Materials.</strong> AI is one option among many. You still pick what fits your lesson — book, video, AI tool, or a mix. AI doesn\'t replace your choice; it gives you more choices.' },
+    4: { title: 'Why ethics matter', body: 'Using AI in education raises important issues of accuracy (Is the information correct?), fairness (Does it treat all students equally?), privacy (Is student data protected?), and academic honesty (Are students doing their own work?). Teachers are responsible for how AI affects learning and must consider these ethical dimensions.', keypoint: 'Teachers must actively consider the ethical implications of AI use in their classrooms.', assure: '<strong>S — Select.</strong> Before you say "yes, I\'ll use this tool with my class," ask: is it accurate? fair? safe for student data? You already check textbooks this way — same idea.' },
+    5: { title: 'Academic integrity and AI', body: 'Academic integrity means learners must show their own understanding. AI can be used to support learning through practice, feedback, and scaffolding. However, AI should not replace thinking or writing. The line to remember: "AI is helpful when it supports practice, but it is a problem when it does the work for the student."', keypoint: 'AI should enhance, not replace, student learning and thinking.', assure: '<strong>S — State Objectives.</strong> When you write what students should be able to do, the AI question becomes clear: do you want them to write the paragraph, or to improve a paragraph AI wrote? Both are valid — but they are different goals.' },
+    6: { title: 'Responsible use of AI', body: 'Responsible teachers explain when AI is allowed and when it isn\'t, check AI-generated content for accuracy and appropriateness, design tasks that require critical thinking (not just AI output), and help students question and evaluate AI output. Remember: AI is a tool. Teachers are the decision-makers.', keypoint: 'Teachers must set clear boundaries and maintain pedagogical control.', assure: '<strong>U — Utilize Media & Materials.</strong> Once you bring AI into the classroom, you set the rules: when it\'s on, when it\'s off, what students do with what it gives them.' },
+    7: { title: 'AI bias', body: 'AI systems learn from large collections of human-created data. Because this data may include stereotypes or unequal representations, AI can sometimes produce biased or unfair outputs. Bias may appear in topics, examples, or language choices.', keypoint: 'AI can reflect human bias, so teachers must review outputs carefully.', assure: '<strong>U — Utilize.</strong> One of the 5 P\'s in this stage is "Preview the materials." With AI, this means trying your prompt before class — sometimes the output has stereotypes you don\'t want students to see.' },
+    8: { title: 'Accuracy and hallucinations', body: 'AI tools can produce information that sounds confident but is incorrect or completely made up. This is often called "hallucination." AI does not check facts unless guided and reviewed by humans.', keypoint: 'AI can sound right while being wrong.', assure: '<strong>U — Utilize.</strong> Always preview AI output before you bring it to class. AI can confidently invent a grammar rule or a famous person — and your students will trust whatever you show them.' },
+    9: { title: 'AI and student privacy', body: 'Some AI tools collect user data such as text inputs or usage patterns. If students share personal information, this data may be stored or processed externally. Teachers must be careful when choosing tools for classroom use.', keypoint: 'Student privacy must be protected when using AI tools.', assure: '<strong>S — Select.</strong> When choosing an AI tool, check two things: how old your students are (most tools require 13+) and what happens to their data. If you can\'t answer either, the safe choice is to use the tool from your own account and project it.' },
+    10: { title: 'Transparency in AI use', body: 'Transparency means being open about when and how AI is used in learning tasks. Students should know whether AI is allowed, for what purpose, and how it supports learning rather than replaces it.', keypoint: 'Clear rules help students use AI responsibly.', assure: '<strong>U — Utilize.</strong> One of the 5 P\'s is "Prepare the learners." Tell students at the start: "Today we\'re using AI for X, not for Y." Clear rules at the start save you problems later.' },
+    11: { title: 'AI as a learning support tool', body: 'AI can support learning by providing examples, explanations, feedback, and practice opportunities. When used well, it helps learners improve skills gradually rather than producing final answers for them.', keypoint: 'AI should scaffold learning, not complete tasks.', assure: '<strong>R — Require Learner Participation.</strong> AI works best when students do something with it: question it, fix it, expand it, compare two of its outputs. Reading what AI wrote and copying it isn\'t learning.' },
+    12: { title: 'Teacher responsibility', body: 'Even when AI is used, teachers remain responsible for lesson goals, content accuracy, assessment, and student learning outcomes. AI does not make pedagogical decisions.', keypoint: 'Responsibility stays with the teacher, not the tool.', assure: '<strong>All six steps.</strong> ASSURE puts a teacher decision at every stage. AI is in the room, but you decide who it\'s for, what it\'s for, how it\'s used, and whether it worked.' },
+    13: { title: 'AI and student over-reliance', body: 'If students rely too much on AI, they may stop practicing key skills such as writing, speaking, or problem-solving. Teachers must design tasks that require student thinking and decision-making.', keypoint: 'Too much AI use can reduce active learning.', assure: '<strong>R — Require Learner Participation.</strong> If students just press a button and copy the answer, they\'re not participating — they\'re watching. Design the task so the thinking still has to come from them.' },
+    14: { title: 'Ethical task design', body: 'Ethical AI use depends on task design. Tasks that ask students to evaluate, adapt, explain, or reflect on AI output promote learning, while copy-paste tasks do not.', keypoint: 'Ethical AI use starts with good task design.', assure: '<strong>S + R — State Objectives and Require Participation.</strong> The "cheating problem" with AI is often a task design problem. If your task can be solved by copying AI output, the task — not AI — needs rethinking.' },
+    15: { title: 'AI literacy', body: 'AI literacy means understanding what AI can do, what it cannot do, and how it should be used responsibly. Developing AI literacy helps students become critical users rather than passive consumers.', keypoint: 'AI literacy is a core 21st-century skill.', assure: '<strong>A + S — Analyze Learners and State Objectives.</strong> If you want students to be critical users of AI, that has to be a goal you write down. It won\'t happen by accident — and it depends on what they already know.' },
+    16: { title: 'AI and assessment', body: 'AI use in assessment requires careful planning. Teachers must decide when AI support is acceptable and when independent student work is required to measure learning accurately.', keypoint: 'Assessment rules must be clear and fair.', assure: '<strong>E — Evaluate & Revise.</strong> When you grade, decide in advance: is AI help allowed here, or not? Tell students. The same answer can be a good answer or a problem depending on what you said before they started.' },
+    17: { title: 'Context matters', body: 'AI tools may work differently depending on learner level, language proficiency, and educational context. What works well in one class may not work in another.', keypoint: 'AI use must be adapted to context.', assure: '<strong>A — Analyze Learners.</strong> The same AI activity can shine in your 8th grade and fall flat in your 5th grade. Knowing your group is what makes the difference, not the tool.' },
+    18: { title: 'Human judgment vs. AI output', body: 'AI outputs should always be questioned, evaluated, and improved by humans. Teachers and students must decide whether AI-generated content is appropriate and useful.', keypoint: 'AI suggestions require human judgment.', assure: '<strong>E — Evaluate & Revise.</strong> After class, ask yourself: did the AI part actually help? Sometimes it did, sometimes it just looked impressive. Be honest with yourself — that\'s how the next lesson gets better.' },
+    19: { title: 'Ethical awareness for students', body: 'Teachers should help students understand why certain AI uses are acceptable and others are not. Ethical awareness supports responsible digital citizenship.', keypoint: 'Ethics should be taught, not assumed.', assure: '<strong>S — State Objectives.</strong> "Use AI ethically" can\'t just be a rule you put on the wall. If you want students to think ethically about AI, make it part of what they\'re learning — and what you\'re looking for.' },
+    20: { title: 'AI is not neutral', body: 'AI tools are created by humans and shaped by human decisions. They are influenced by cultural, social, and linguistic factors, which means they are not neutral or objective.', keypoint: 'AI reflects human choices and values.', assure: '<strong>S — Select.</strong> When you pick a tool, think about whose voice it carries. Some tools were trained mostly on English content from one part of the world — that affects what they show your students.' },
+  };
+
+  const state = {
+    activeTheme: null,
+    drawn: new Set(),
+    drawnPerTheme: {}
+  };
+  themes.forEach(t => state.drawnPerTheme[t.id] = new Set());
+
+  const themesEl = document.getElementById('themes');
+  const drawBtn = document.getElementById('draw-btn');
+  const resetThemeBtn = document.getElementById('reset-theme-btn');
+  const resetAllBtn = document.getElementById('reset-all-btn');
+  const stripArea = document.getElementById('strip-area');
+  const drawnCountEl = document.getElementById('drawn-count');
+  const themeCountEl = document.getElementById('theme-count');
+  const progressEl = document.getElementById('progress');
+
+  function renderThemes() {
+    themesEl.innerHTML = '';
+    themes.forEach(t => {
+      const remaining = t.strips.filter(s => !state.drawnPerTheme[t.id].has(s)).length;
+      const total = t.strips.length;
+      const card = document.createElement('div');
+      card.className = 'theme-card' + (state.activeTheme === t.id ? ' active' : '');
+      card.innerHTML = '<p class="theme-name"><span class="theme-dot" style="background:' + t.color + '"></span>' + t.name + '</p><p class="theme-meta">' + remaining + ' / ' + total + ' left</p>';
+      card.addEventListener('click', () => {
+        state.activeTheme = t.id;
+        renderThemes();
+        updateButtons();
+      });
+      themesEl.appendChild(card);
+    });
+  }
+
+  function updateButtons() {
+    if (!state.activeTheme) {
+      drawBtn.disabled = true;
+      resetThemeBtn.disabled = true;
+      drawBtn.textContent = 'Draw a card';
+      return;
+    }
+    const t = themes.find(x => x.id === state.activeTheme);
+    const remaining = t.strips.filter(s => !state.drawnPerTheme[t.id].has(s));
+    drawBtn.disabled = remaining.length === 0;
+    drawBtn.textContent = remaining.length === 0 ? 'No cards left in this theme' : 'Draw a card (' + remaining.length + ' left)';
+    resetThemeBtn.disabled = state.drawnPerTheme[t.id].size === 0;
+  }
+
+  function renderStats() {
+    drawnCountEl.textContent = state.drawn.size;
+    const themesUsed = themes.filter(t => state.drawnPerTheme[t.id].size > 0).length;
+    themeCountEl.textContent = themesUsed;
+  }
+
+  function drawStrip() {
+    if (!state.activeTheme) return;
+    const t = themes.find(x => x.id === state.activeTheme);
+    const available = t.strips.filter(s => !state.drawnPerTheme[t.id].has(s));
+    if (available.length === 0) return;
+    const stripNum = available[Math.floor(Math.random() * available.length)];
+    state.drawnPerTheme[t.id].add(stripNum);
+    state.drawn.add(stripNum);
+    renderStrip(stripNum, t);
+    renderThemes();
+    updateButtons();
+    renderStats();
+    updateProgress();
+  }
+
+  function renderStrip(num, theme) {
+    const data = stripData[num];
+    stripArea.innerHTML = '<div class="strip"><div class="strip-header"><span class="strip-num">CARD ' + num + ' / 20</span><span class="strip-theme-tag" style="background:' + theme.bg + ';color:' + theme.color + '">' + theme.name + '</span></div><p class="strip-title">' + data.title + '</p><p class="strip-body">' + data.body + '</p><div class="keypoint"><p class="keypoint-label">KEY POINT</p><p class="keypoint-text">' + data.keypoint + '</p></div><div class="assure"><p class="assure-label">WHERE THIS FITS IN ASSURE</p><p class="assure-stage">' + data.assure + '</p></div></div>';
+  }
+
+  function updateProgress() {
+    if (state.drawn.size === 0) { progressEl.textContent = ''; return; }
+    if (state.drawn.size === 20) { progressEl.textContent = 'All 20 cards opened'; return; }
+    progressEl.textContent = 'Opened: ' + [...state.drawn].sort((a,b)=>a-b).join(', ');
+  }
+
+  drawBtn.addEventListener('click', drawStrip);
+
+  resetThemeBtn.addEventListener('click', () => {
+    if (!state.activeTheme) return;
+    const t = themes.find(x => x.id === state.activeTheme);
+    [...state.drawnPerTheme[t.id]].forEach(n => state.drawn.delete(n));
+    state.drawnPerTheme[t.id].clear();
+    renderThemes();
+    updateButtons();
+    renderStats();
+    updateProgress();
+  });
+
+  resetAllBtn.addEventListener('click', () => {
+    state.drawn.clear();
+    themes.forEach(t => state.drawnPerTheme[t.id].clear());
+    state.activeTheme = null;
+    stripArea.innerHTML = '<div class="empty">Pick a theme above, then click "draw a card".</div>';
+    renderThemes();
+    updateButtons();
+    renderStats();
+    updateProgress();
+  });
+
+  renderThemes();
+  updateButtons();
+  renderStats();
+})();
+</script>
+
+</body>
+</html>
